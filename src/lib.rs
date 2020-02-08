@@ -1,4 +1,5 @@
 mod codes;
+mod of_node;
 
 use std::fs::{File, OpenOptions};
 use std::path::Path;
@@ -197,5 +198,31 @@ impl FileScreen {
     /// Create a default Screen instance based on `"/dev/lcd"` path.
     pub fn default() -> std::io::Result<FileScreen> {
         Screen::from_dev_path(&Path::new(DEFAULT_SCREEN_DEV_PATH))
+    }
+
+    /// Get the width of the screen, in number of characters it can display.
+    ///
+    /// **Important note:** The implementation behind this function is
+    /// currently a hack that will go find the value in the `auxdisplay`
+    /// platform device tree node in
+    /// `/sys/devices/platform/auxdisplay/of_node/*`. This is because the
+    /// `charlcd` driver does not export the screen width nor height to
+    /// userspace (could be using `ioctl` or `read` syscalls).
+    ///
+    pub fn width(&self) -> std::io::Result<u32> {
+        of_node::display_width_chars()
+    }
+
+    /// Get the height of the screen, in number of characters it can display.
+    ///
+    /// **Important note:** The implementation behind this function is
+    /// currently a hack that will go find the value in the `auxdisplay`
+    /// platform device tree node in
+    /// `/sys/devices/platform/auxdisplay/of_node/*`. This is because the
+    /// `charlcd` driver does not export the screen width nor height to
+    /// userspace (could be using `ioctl` or `read` syscalls).
+    ///
+    pub fn height(&self) -> std::io::Result<u32> {
+        of_node::display_height_chars()
     }
 }
