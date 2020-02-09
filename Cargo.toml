@@ -4,7 +4,10 @@ version = "0.1.0"
 authors = ["Agathe Porte <microjoe@microjoe.org>"]
 edition = "2018"
 
+description = "/dev/lcd Linux charlcd device driver abstraction library"
+
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+# temporary requirement for of_node hack (width and height)
 byteorder = "1.*"
