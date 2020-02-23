@@ -1,4 +1,5 @@
 mod codes;
+pub mod custom_char;
 mod of_node;
 
 use std::fs::{File, OpenOptions};
@@ -286,6 +287,17 @@ where
     /// with multiple screen variants. No relevant footage available.
     pub fn large_font(&mut self) -> std::io::Result<()> {
         write_simple_code!(self, SpecialCode::LargeFont)
+    }
+
+    /// Custom character create
+    pub fn custom_char(&mut self, code: u8, value: [u8; 8]) -> std::io::Result<()> {
+        let mut res = 0u64;
+        let mut i = 0;
+        for b in value.iter().rev() {
+            res |= (*b as u64) << i;
+            i += 8;
+        }
+        write_simple_code!(self, SpecialCode::Generator(code, res))
     }
 
     pub fn gotoxy(&mut self, x: u32, y: u32) -> std::io::Result<()> {
