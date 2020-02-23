@@ -287,6 +287,18 @@ where
     pub fn large_font(&mut self) -> std::io::Result<()> {
         write_simple_code!(self, SpecialCode::LargeFont)
     }
+
+    pub fn gotoxy(&mut self, x: u32, y: u32) -> std::io::Result<()> {
+        write_simple_code!(self, SpecialCode::GotoXY(Some(x), Some(y)))
+    }
+
+    pub fn gotox(&mut self, x: u32) -> std::io::Result<()> {
+        write_simple_code!(self, SpecialCode::GotoXY(Some(x), None))
+    }
+
+    pub fn gotoy(&mut self, y: u32) -> std::io::Result<()> {
+        write_simple_code!(self, SpecialCode::GotoXY(None, Some(y)))
+    }
 }
 
 // Reimplement Write trait for Screen, so that user can call the write and

@@ -46,6 +46,7 @@ pub enum SpecialCode {
     GotoXY(Option<u32>, Option<u32>),
 }
 
+/// Write a X or Y goto symbol, as required
 fn write_goto_xy_sym<T: Write>(writer: &mut T, sym: char, value: Option<u32>) -> Result<usize> {
     let mut total = 0;
     if let Some(value) = value {
@@ -55,6 +56,7 @@ fn write_goto_xy_sym<T: Write>(writer: &mut T, sym: char, value: Option<u32>) ->
     Ok(total)
 }
 
+/// Write both X and/or Y goto symbol, as required
 fn write_goto_xy<T: Write>(writer: &mut T, x: Option<u32>, y: Option<u32>) -> Result<usize> {
     let mut total = 0;
     total += write_goto_xy_sym(writer, 'x', x)?;
