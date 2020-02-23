@@ -1,6 +1,7 @@
 mod codes;
 pub mod custom_char;
 mod of_node;
+pub mod special_char;
 
 use std::fs::{File, OpenOptions};
 use std::path::Path;
