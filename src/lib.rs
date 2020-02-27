@@ -169,7 +169,8 @@ where
     /// Flash the backlight during a small duration.
     ///
     /// The exact duration is specified in the driver. As of today, the default
-    /// value is set to 4 seconds (`LCD_BL_TEMPO_PERIOD` define in `charlcd.c`).
+    /// value is set to 4 seconds (see the `LCD_BL_TEMPO_PERIOD` define of
+    /// the `charlcd.c` driver in your Linux tree).
     pub fn flash_backlight(&mut self) -> std::io::Result<()> {
         write_simple_code!(self, SpecialCode::FlashBacklight)
     }
