@@ -1,3 +1,40 @@
+//! Create custom characters by defining their pixels.
+//!
+//! A custom character is considered as a 8x5 pixel array.
+//!
+//! You can declare a custom character by defining an array of type `[u8; 8]`
+//! where:
+//!
+//! - each byte represents a line;
+//! - each bit in the byte represent a pixel.
+//!
+//! Only the 5 lower bits of the byte are used, because the character width is
+//! 5 pixels.
+//!
+//! # Example
+//!
+//! ```
+//! /// ▸
+//! #[cfg_attr(rustfmt, rustfmt_skip)]
+//! pub const RIGHT_ARROW: [u8; 8] = [
+//!     0b00000,
+//!     0b01000,
+//!     0b01100,
+//!     0b01110,
+//!     0b01100,
+//!     0b01000,
+//!     0b00000,
+//!     0b00000,
+//! ];
+//! ```
+//!
+//! The `#[cfg_attr(rustfmt, rustfmt_skip)]` part is required in order to
+//! avoid `rustfmt` put each item after the next one so that we cannot see the
+//! visual pixel representation of the custom character anymore.
+//!
+//! The custom character can then be put into the screen's memory by using the
+//! [`Screen::custom_char`][super::Screen::custom_char] function.
+
 /// X axis mirror of a custom LCD character
 pub const fn mirror_x(src: [u8; 8]) -> [u8; 8] {
     // const fn do not support for loops currently, hence manual unroll
@@ -21,6 +58,7 @@ pub const fn mirror_y(src: [u8; 8]) -> [u8; 8] {
     ]
 }
 
+/// ▸
 #[cfg_attr(rustfmt, rustfmt_skip)]
 pub const RIGHT_ARROW: [u8; 8] = [
     0b00000,
@@ -33,8 +71,10 @@ pub const RIGHT_ARROW: [u8; 8] = [
     0b00000,
 ];
 
+/// ◂
 pub const LEFT_ARROW: [u8; 8] = mirror_x(RIGHT_ARROW);
 
+/// ▴
 #[cfg_attr(rustfmt, rustfmt_skip)]
 pub const UP_ARROW: [u8; 8] = [
     0b00000,
@@ -47,4 +87,5 @@ pub const UP_ARROW: [u8; 8] = [
     0b00000,
 ];
 
+/// ▾
 pub const DOWN_ARROW: [u8; 8] = mirror_y(UP_ARROW);

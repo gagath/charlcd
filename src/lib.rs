@@ -762,7 +762,36 @@ where
         write_simple_code!(self, SpecialCode::LargeFont)
     }
 
-    /// Custom character create
+    /// Store a custom character into the screen memory for future usage.
+    ///
+    /// See also [`custom_char`] module for a global explanation on how to
+    /// declare custom characters, as well as a list of already defined custom
+    /// characters.
+    ///
+    /// # Example
+    ///
+    /// ```no_run
+    /// extern crate charlcd;
+    ///
+    /// use std::io::Write;
+    /// use charlcd::{Screen, custom_char};
+    ///
+    /// fn main() -> std::io::Result<()> {
+    ///     let mut screen = Screen::default()?;
+    ///
+    ///     screen.reinit()?;
+    ///
+    ///     // Store the custom ▸ character in the screen memory, code 0
+    ///     screen.custom_char(0, custom_char::RIGHT_ARROW)?;
+    ///
+    ///     // Print custom character from screen memory, code 0
+    ///     screen.write(b"\x00")?;
+    ///     screen.flush()?;
+    ///
+    ///     Ok(())
+    /// }
+    /// ```
+    ///
     pub fn custom_char(&mut self, code: u8, value: [u8; 8]) -> std::io::Result<()> {
         let mut res = 0u64;
         let mut i = 0;
