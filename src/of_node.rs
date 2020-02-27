@@ -12,7 +12,8 @@ fn read_u32_node(node_name: &str) -> Result<u32> {
         "/sys/devices/platform/auxdisplay/of_node/{}",
         node_name
     ))?;
-    Ok(f.read_u32::<BigEndian>()?)
+    let value = f.read_u32::<BigEndian>()?;
+    Ok(value)
 }
 
 pub fn display_height_chars() -> Result<u32> {
