@@ -43,6 +43,20 @@ pub struct Screen<T> {
     writer: T,
 }
 
+// Reimplement Write trait for Screen, so that user can call the write and
+// flush methods of the inner writer.
+impl<T> Write for Screen<T>
+where
+    T: Write,
+{
+    fn write(&mut self, buf: &[u8]) -> Result<usize> {
+        self.writer.write(buf)
+    }
+    fn flush(&mut self) -> Result<()> {
+        self.writer.flush()
+    }
+}
+
 macro_rules! write_simple_code {
     ($self:expr, $code:expr) => {{
         $code.write_into(&mut $self.writer)?;
@@ -62,6 +76,32 @@ where
 
     /// Clean the rest of the current line, from current cursor position.
     ///
+    /// # Example
+    ///
+    /// ```no_run
+    /// extern crate charlcd;
+    ///
+    /// use std::io::Write;
+    /// use charlcd::Screen;
+    ///
+    /// fn main() -> std::io::Result<()> {
+    ///     let mut screen = Screen::default()?;
+    ///
+    ///     for _ in 1..5 {
+    ///         screen.write(b"test")?;
+    ///     }
+    ///     for _ in 1..8 {
+    ///         screen.back()?;
+    ///     }
+    ///     screen.flush()?; // before
+    ///
+    ///     screen.kill_eol()?;
+    ///     screen.flush()?; // after
+    ///
+    ///     Ok(())
+    /// }
+    /// ```
+    ///
     /// # Live footage (before and after)
     /// ![kill_eol_before](https://crates.microjoe.org/charlcd/media/docs/kill_eol_before.jpg)
     /// ![kill_eol](https://crates.microjoe.org/charlcd/media/docs/kill_eol.jpg)
@@ -71,6 +111,29 @@ where
     }
 
     /// Reinitialize the display to its default hardware values.
+    ///
+    /// # Example
+    ///
+    /// ```no_run
+    /// extern crate charlcd;
+    ///
+    /// use std::io::Write;
+    /// use charlcd::Screen;
+    ///
+    /// fn main() -> std::io::Result<()> {
+    ///     let mut screen = Screen::default()?;
+    ///
+    ///     for _ in 1..20 {
+    ///         screen.write(b"test")?;
+    ///     }
+    ///     screen.flush()?; // before
+    ///
+    ///     screen.reinit()?;
+    ///     screen.flush()?; // after
+    ///
+    ///     Ok(())
+    /// }
+    /// ```
     ///
     /// # Live footage (before and after)
     /// ![full](https://crates.microjoe.org/charlcd/media/docs/full.jpg)
@@ -93,6 +156,29 @@ where
     /// The displayed content is not lost and kept into the screen buffer. Call
     /// [`Screen::display_on()`] to display back what was printed to the screen.
     ///
+    /// # Example
+    ///
+    /// ```no_run
+    /// extern crate charlcd;
+    ///
+    /// use std::io::Write;
+    /// use charlcd::Screen;
+    ///
+    /// fn main() -> std::io::Result<()> {
+    ///     let mut screen = Screen::default()?;
+    ///
+    ///     for _ in 1..20 {
+    ///         screen.write(b"test")?;
+    ///     }
+    ///     screen.flush()?; // before
+    ///
+    ///     screen.display_off()?;
+    ///     screen.flush()?; // after
+    ///
+    ///     Ok(())
+    /// }
+    /// ```
+    ///
     /// # Live footage (before and after)
     /// ![full](https://crates.microjoe.org/charlcd/media/docs/full.jpg)
     /// ![display_off](https://crates.microjoe.org/charlcd/media/docs/display_off.jpg)
@@ -105,6 +191,32 @@ where
     ///
     /// The content of the screen buffer will be displayed back with no change.
     ///
+    /// # Example
+    ///
+    /// ```no_run
+    /// extern crate charlcd;
+    ///
+    /// use std::io::Write;
+    /// use charlcd::Screen;
+    ///
+    /// fn main() -> std::io::Result<()> {
+    ///     let mut screen = Screen::default()?;
+    ///
+    ///     for _ in 1..20 {
+    ///         screen.write(b"test")?;
+    ///     }
+    ///     screen.flush()?;
+    ///
+    ///     screen.display_off()?;
+    ///     screen.flush()?; // before
+    ///
+    ///     screen.display_on()?;
+    ///     screen.flush()?; // after
+    ///
+    ///     Ok(())
+    /// }
+    /// ```
+    ///
     /// # Live footage (before and after)
     /// ![display_off](https://crates.microjoe.org/charlcd/media/docs/display_off.jpg)
     /// ![full](https://crates.microjoe.org/charlcd/media/docs/full.jpg)
@@ -114,6 +226,27 @@ where
     }
 
     /// Enable the underscore cursor (independent of blinking cursor).
+    ///
+    /// # Example
+    ///
+    /// ```no_run
+    /// extern crate charlcd;
+    ///
+    /// use std::io::Write;
+    /// use charlcd::Screen;
+    ///
+    /// fn main() -> std::io::Result<()> {
+    ///     let mut screen = Screen::default()?;
+    ///
+    ///     screen.write(b"test")?;
+    ///     screen.flush()?; // before
+    ///
+    ///     screen.cursor_on()?;
+    ///     screen.flush()?; // after
+    ///
+    ///     Ok(())
+    /// }
+    /// ```
     ///
     /// # Live footage (before and after)
     /// ![test_clear](https://crates.microjoe.org/charlcd/media/docs/test_clear.jpg)
@@ -125,6 +258,28 @@ where
 
     /// Disable the underscore cursor (independent of blinking cursor).
     ///
+    /// # Example
+    ///
+    /// ```no_run
+    /// extern crate charlcd;
+    ///
+    /// use std::io::Write;
+    /// use charlcd::Screen;
+    ///
+    /// fn main() -> std::io::Result<()> {
+    ///     let mut screen = Screen::default()?;
+    ///
+    ///     screen.write(b"test")?;
+    ///     screen.cursor_on()?;
+    ///     screen.flush()?; // before
+    ///
+    ///     screen.cursor_off()?;
+    ///     screen.flush()?; // after
+    ///
+    ///     Ok(())
+    /// }
+    /// ```
+    ///
     /// # Live footage (before and after)
     /// ![test](https://crates.microjoe.org/charlcd/media/docs/test.jpg)
     /// ![cursor_off](https://crates.microjoe.org/charlcd/media/docs/blink_on.jpg)
@@ -134,6 +289,27 @@ where
     }
 
     /// Enable the blinking cursor (independent of underscore cursor).
+    ///
+    /// # Example
+    ///
+    /// ```no_run
+    /// extern crate charlcd;
+    ///
+    /// use std::io::Write;
+    /// use charlcd::Screen;
+    ///
+    /// fn main() -> std::io::Result<()> {
+    ///     let mut screen = Screen::default()?;
+    ///
+    ///     screen.write(b"test")?;
+    ///     screen.flush()?; // before
+    ///
+    ///     screen.blink_on()?;
+    ///     screen.flush()?; // after
+    ///
+    ///     Ok(())
+    /// }
+    /// ```
     ///
     /// # Live footage (before and after)
     /// ![test_clear](https://crates.microjoe.org/charlcd/media/docs/test_clear.jpg)
@@ -148,6 +324,28 @@ where
 
     /// Disable the blinking cursor (independent of underscore cursor).
     ///
+    /// # Example
+    ///
+    /// ```no_run
+    /// extern crate charlcd;
+    ///
+    /// use std::io::Write;
+    /// use charlcd::Screen;
+    ///
+    /// fn main() -> std::io::Result<()> {
+    ///     let mut screen = Screen::default()?;
+    ///
+    ///     screen.write(b"test")?;
+    ///     screen.blink_on()?;
+    ///     screen.flush()?; // before
+    ///
+    ///     screen.blink_off()?;
+    ///     screen.flush()?; // after
+    ///
+    ///     Ok(())
+    /// }
+    /// ```
+    ///
     /// # Live footage (before and after)
     /// ![test](https://crates.microjoe.org/charlcd/media/docs/test.jpg)
     /// ![blink_off](https://crates.microjoe.org/charlcd/media/docs/cursor_on.jpg)
@@ -157,11 +355,65 @@ where
     }
 
     /// Enable the backlight.
+    ///
+    /// # Example
+    ///
+    /// ```no_run
+    /// extern crate charlcd;
+    ///
+    /// use std::io::Write;
+    /// use charlcd::Screen;
+    ///
+    /// fn main() -> std::io::Result<()> {
+    ///     let mut screen = Screen::default()?;
+    ///
+    ///     screen.write(b"test")?;
+    ///     screen.backlight_off()?;
+    ///     screen.flush()?; // before
+    ///
+    ///     screen.backlight_on()?;
+    ///     screen.flush()?; // after
+    ///
+    ///     Ok(())
+    /// }
+    /// ```
+    ///
+    /// Note: due to poor light conditions, it is not easy to illustrate the
+    /// before and after steps with a photography. The *backlight* term should
+    /// be straightforward to understand so that a picture is not needed
+    /// afterall.
     pub fn backlight_on(&mut self) -> std::io::Result<()> {
         write_simple_code!(self, SpecialCode::BacklightOn)
     }
 
     /// Disable the backlight.
+    ///
+    /// # Example
+    ///
+    /// ```no_run
+    /// extern crate charlcd;
+    ///
+    /// use std::io::Write;
+    /// use charlcd::Screen;
+    ///
+    /// fn main() -> std::io::Result<()> {
+    ///     let mut screen = Screen::default()?;
+    ///
+    ///     screen.write(b"test")?;
+    ///     screen.backlight_on()?;
+    ///     screen.flush()?; // before
+    ///
+    ///     screen.backlight_off()?;
+    ///     screen.flush()?; // after
+    ///
+    ///     Ok(())
+    /// }
+    /// ```
+    ///
+    /// Note: due to poor light conditions, it is not easy to illustrate the
+    /// before and after steps with a photography. The *backlight* term should
+    /// be straightforward to understand so that a picture is not needed
+    /// afterall.
     pub fn backlight_off(&mut self) -> std::io::Result<()> {
         write_simple_code!(self, SpecialCode::BacklightOff)
     }
@@ -171,11 +423,62 @@ where
     /// The exact duration is specified in the driver. As of today, the default
     /// value is set to 4 seconds (see the `LCD_BL_TEMPO_PERIOD` define of
     /// the `charlcd.c` driver in your Linux tree).
+    ///
+    /// # Example
+    ///
+    /// ```no_run
+    /// extern crate charlcd;
+    ///
+    /// use std::io::Write;
+    /// use charlcd::Screen;
+    ///
+    /// fn main() -> std::io::Result<()> {
+    ///     let mut screen = Screen::default()?;
+    ///
+    ///     screen.write(b"test")?;
+    ///     screen.backlight_off()?;
+    ///     screen.flush()?; // before
+    ///
+    ///     screen.flash_backlight()?;
+    ///     screen.flush()?; // after
+    ///
+    ///     // after some time, the screen backlight goes off by itself
+    ///
+    ///     Ok(())
+    /// }
+    /// ```
+    ///
+    /// Note: due to poor light conditions, it is not easy to illustrate the
+    /// before and after steps with a photography. The *backlight* term should
+    /// be straightforward to understand so that a picture is not needed
+    /// afterall.
     pub fn flash_backlight(&mut self) -> std::io::Result<()> {
         write_simple_code!(self, SpecialCode::FlashBacklight)
     }
 
     /// Clear the screen and return the cursor at original (0, 0) XY position.
+    ///
+    /// # Example
+    ///
+    /// ```no_run
+    /// extern crate charlcd;
+    ///
+    /// use std::io::Write;
+    /// use charlcd::Screen;
+    ///
+    /// fn main() -> std::io::Result<()> {
+    ///     let mut screen = Screen::default()?;
+    ///
+    ///     screen.reinit()?;
+    ///     screen.write(b"test")?;
+    ///     screen.flush()?; // before
+    ///
+    ///     screen.clear()?;
+    ///     screen.flush()?; // after
+    ///
+    ///     Ok(())
+    /// }
+    /// ```
     ///
     /// # Live footage (before and after)
     /// ![test](https://crates.microjoe.org/charlcd/media/docs/test.jpg)
@@ -193,6 +496,28 @@ where
     /// `'\b'` escape sequence. This sequence is valid in C, but is not
     /// available in Rust.
     ///
+    /// # Example
+    ///
+    /// ```no_run
+    /// extern crate charlcd;
+    ///
+    /// use std::io::Write;
+    /// use charlcd::Screen;
+    ///
+    /// fn main() -> std::io::Result<()> {
+    ///     let mut screen = Screen::default()?;
+    ///
+    ///     screen.reinit()?;
+    ///     screen.write(b"test")?;
+    ///     screen.flush()?; // before
+    ///
+    ///     screen.back()?;
+    ///     screen.flush()?; // after
+    ///
+    ///     Ok(())
+    /// }
+    /// ```
+    ///
     /// # Live footage (before and after)
     /// ![test](https://crates.microjoe.org/charlcd/media/docs/test.jpg)
     /// ![back](https://crates.microjoe.org/charlcd/media/docs/back.jpg)
@@ -206,6 +531,28 @@ where
 
     /// Shift cursor left.
     ///
+    /// # Example
+    ///
+    /// ```no_run
+    /// extern crate charlcd;
+    ///
+    /// use std::io::Write;
+    /// use charlcd::Screen;
+    ///
+    /// fn main() -> std::io::Result<()> {
+    ///     let mut screen = Screen::default()?;
+    ///
+    ///     screen.reinit()?;
+    ///     screen.write(b"test")?;
+    ///     screen.flush()?; // before
+    ///
+    ///     screen.shift_cursor_left()?;
+    ///     screen.flush()?; // after
+    ///
+    ///     Ok(())
+    /// }
+    /// ```
+    ///
     /// # Live footage (before and after)
     /// ![test](https://crates.microjoe.org/charlcd/media/docs/test.jpg)
     /// ![shift_cursor_left](https://crates.microjoe.org/charlcd/media/docs/shift_cursor_left.jpg)
@@ -216,6 +563,28 @@ where
 
     /// Shift cursor right.
     ///
+    /// # Example
+    ///
+    /// ```no_run
+    /// extern crate charlcd;
+    ///
+    /// use std::io::Write;
+    /// use charlcd::Screen;
+    ///
+    /// fn main() -> std::io::Result<()> {
+    ///     let mut screen = Screen::default()?;
+    ///
+    ///     screen.reinit()?;
+    ///     screen.write(b"test")?;
+    ///     screen.flush()?; // before
+    ///
+    ///     screen.shift_cursor_right()?;
+    ///     screen.flush()?; // after
+    ///
+    ///     Ok(())
+    /// }
+    /// ```
+    ///
     /// # Live footage (before and after)
     /// ![test](https://crates.microjoe.org/charlcd/media/docs/test.jpg)
     /// ![shift_cursor_right](https://crates.microjoe.org/charlcd/media/docs/shift_cursor_right.jpg)
@@ -225,6 +594,30 @@ where
     }
 
     /// Shift display left.
+    ///
+    /// # Example
+    ///
+    /// ```no_run
+    /// extern crate charlcd;
+    ///
+    /// use std::io::Write;
+    /// use charlcd::Screen;
+    ///
+    /// fn main() -> std::io::Result<()> {
+    ///     let mut screen = Screen::default()?;
+    ///
+    ///     screen.reinit()?;
+    ///     for _ in 1..5 {
+    ///         screen.write(b"test")?;
+    ///     }
+    ///     screen.flush()?; // before
+    ///
+    ///     screen.shift_display_left()?;
+    ///     screen.flush()?; // after
+    ///
+    ///     Ok(())
+    /// }
+    /// ```
     ///
     /// # Live footage (before and after)
     /// ![shift](https://crates.microjoe.org/charlcd/media/docs/shift.jpg)
@@ -238,6 +631,30 @@ where
 
     /// Shift display right.
     ///
+    /// # Example
+    ///
+    /// ```no_run
+    /// extern crate charlcd;
+    ///
+    /// use std::io::Write;
+    /// use charlcd::Screen;
+    ///
+    /// fn main() -> std::io::Result<()> {
+    ///     let mut screen = Screen::default()?;
+    ///
+    ///     screen.reinit()?;
+    ///     for _ in 1..5 {
+    ///         screen.write(b"test")?;
+    ///     }
+    ///     screen.flush()?; // before
+    ///
+    ///     screen.shift_display_right()?;
+    ///     screen.flush()?; // after
+    ///
+    ///     Ok(())
+    /// }
+    /// ```
+    ///
     /// # Live footage (before and after)
     /// ![shift](https://crates.microjoe.org/charlcd/media/docs/shift.jpg)
     /// ![shift_display_right](https://crates.microjoe.org/charlcd/media/docs/shift_display_right.jpg)
@@ -249,6 +666,30 @@ where
     }
 
     /// Enable one line mode.
+    ///
+    /// # Example
+    ///
+    /// ```no_run
+    /// extern crate charlcd;
+    ///
+    /// use std::io::Write;
+    /// use charlcd::Screen;
+    ///
+    /// fn main() -> std::io::Result<()> {
+    ///     let mut screen = Screen::default()?;
+    ///
+    ///     screen.reinit()?;
+    ///     for _ in 1..20 {
+    ///         screen.write(b"test")?;
+    ///     }
+    ///     screen.flush()?; // before
+    ///
+    ///     screen.one_line()?;
+    ///     screen.flush()?; // after
+    ///
+    ///     Ok(())
+    /// }
+    /// ```
     ///
     /// # Live footage (before and after)
     /// ![full](https://crates.microjoe.org/charlcd/media/docs/full.jpg)
@@ -267,6 +708,31 @@ where
     }
 
     /// Enable two lines mode.
+    ///
+    /// # Example
+    ///
+    /// ```no_run
+    /// extern crate charlcd;
+    ///
+    /// use std::io::Write;
+    /// use charlcd::Screen;
+    ///
+    /// fn main() -> std::io::Result<()> {
+    ///     let mut screen = Screen::default()?;
+    ///
+    ///     screen.reinit()?;
+    ///     for _ in 1..20 {
+    ///         screen.write(b"test")?;
+    ///     }
+    ///     screen.one_line()?;
+    ///     screen.flush()?; // before
+    ///
+    ///     screen.two_lines()?;
+    ///     screen.flush()?; // after
+    ///
+    ///     Ok(())
+    /// }
+    /// ```
     ///
     /// # Live footage (before and after)
     /// ![one_line](https://crates.microjoe.org/charlcd/media/docs/one_line.jpg)
@@ -320,20 +786,6 @@ where
     }
 }
 
-// Reimplement Write trait for Screen, so that user can call the write and
-// flush methods of the inner writer.
-impl<T> Write for Screen<T>
-where
-    T: Write,
-{
-    fn write(&mut self, buf: &[u8]) -> Result<usize> {
-        self.writer.write(buf)
-    }
-    fn flush(&mut self) -> Result<()> {
-        self.writer.flush()
-    }
-}
-
 type FileScreen = Screen<BufWriter<File>>;
 
 const DEFAULT_SCREEN_DEV_PATH: &str = "/dev/lcd";
@@ -359,6 +811,7 @@ impl FileScreen {
     /// ```no_run
     /// extern crate charlcd;
     ///
+    /// use std::io::Write;
     /// use charlcd::Screen;
     ///
     /// fn main() -> std::io::Result<()> {
@@ -394,6 +847,7 @@ impl FileScreen {
     /// ```no_run
     /// extern crate charlcd;
     ///
+    /// use std::io::Write;
     /// use charlcd::Screen;
     ///
     /// fn main() -> std::io::Result<()> {
