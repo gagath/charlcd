@@ -23,8 +23,6 @@ use codes::WriteInto;
 /// # Simple example
 ///
 /// ```no_run
-/// extern crate charlcd;
-///
 /// use charlcd::Screen;
 /// use std::io::Write;
 ///
@@ -79,8 +77,6 @@ where
     /// # Example
     ///
     /// ```no_run
-    /// extern crate charlcd;
-    ///
     /// use std::io::Write;
     /// use charlcd::Screen;
     ///
@@ -115,8 +111,6 @@ where
     /// # Example
     ///
     /// ```no_run
-    /// extern crate charlcd;
-    ///
     /// use std::io::Write;
     /// use charlcd::Screen;
     ///
@@ -159,8 +153,6 @@ where
     /// # Example
     ///
     /// ```no_run
-    /// extern crate charlcd;
-    ///
     /// use std::io::Write;
     /// use charlcd::Screen;
     ///
@@ -194,8 +186,6 @@ where
     /// # Example
     ///
     /// ```no_run
-    /// extern crate charlcd;
-    ///
     /// use std::io::Write;
     /// use charlcd::Screen;
     ///
@@ -230,8 +220,6 @@ where
     /// # Example
     ///
     /// ```no_run
-    /// extern crate charlcd;
-    ///
     /// use std::io::Write;
     /// use charlcd::Screen;
     ///
@@ -261,8 +249,6 @@ where
     /// # Example
     ///
     /// ```no_run
-    /// extern crate charlcd;
-    ///
     /// use std::io::Write;
     /// use charlcd::Screen;
     ///
@@ -293,8 +279,6 @@ where
     /// # Example
     ///
     /// ```no_run
-    /// extern crate charlcd;
-    ///
     /// use std::io::Write;
     /// use charlcd::Screen;
     ///
@@ -327,8 +311,6 @@ where
     /// # Example
     ///
     /// ```no_run
-    /// extern crate charlcd;
-    ///
     /// use std::io::Write;
     /// use charlcd::Screen;
     ///
@@ -359,8 +341,6 @@ where
     /// # Example
     ///
     /// ```no_run
-    /// extern crate charlcd;
-    ///
     /// use std::io::Write;
     /// use charlcd::Screen;
     ///
@@ -391,8 +371,6 @@ where
     /// # Example
     ///
     /// ```no_run
-    /// extern crate charlcd;
-    ///
     /// use std::io::Write;
     /// use charlcd::Screen;
     ///
@@ -427,8 +405,6 @@ where
     /// # Example
     ///
     /// ```no_run
-    /// extern crate charlcd;
-    ///
     /// use std::io::Write;
     /// use charlcd::Screen;
     ///
@@ -461,8 +437,6 @@ where
     /// # Example
     ///
     /// ```no_run
-    /// extern crate charlcd;
-    ///
     /// use std::io::Write;
     /// use charlcd::Screen;
     ///
@@ -499,8 +473,6 @@ where
     /// # Example
     ///
     /// ```no_run
-    /// extern crate charlcd;
-    ///
     /// use std::io::Write;
     /// use charlcd::Screen;
     ///
@@ -534,8 +506,6 @@ where
     /// # Example
     ///
     /// ```no_run
-    /// extern crate charlcd;
-    ///
     /// use std::io::Write;
     /// use charlcd::Screen;
     ///
@@ -566,8 +536,6 @@ where
     /// # Example
     ///
     /// ```no_run
-    /// extern crate charlcd;
-    ///
     /// use std::io::Write;
     /// use charlcd::Screen;
     ///
@@ -598,8 +566,6 @@ where
     /// # Example
     ///
     /// ```no_run
-    /// extern crate charlcd;
-    ///
     /// use std::io::Write;
     /// use charlcd::Screen;
     ///
@@ -634,8 +600,6 @@ where
     /// # Example
     ///
     /// ```no_run
-    /// extern crate charlcd;
-    ///
     /// use std::io::Write;
     /// use charlcd::Screen;
     ///
@@ -670,8 +634,6 @@ where
     /// # Example
     ///
     /// ```no_run
-    /// extern crate charlcd;
-    ///
     /// use std::io::Write;
     /// use charlcd::Screen;
     ///
@@ -712,8 +674,6 @@ where
     /// # Example
     ///
     /// ```no_run
-    /// extern crate charlcd;
-    ///
     /// use std::io::Write;
     /// use charlcd::Screen;
     ///
@@ -771,8 +731,6 @@ where
     /// # Example
     ///
     /// ```no_run
-    /// extern crate charlcd;
-    ///
     /// use std::io::Write;
     /// use charlcd::{Screen, custom_char};
     ///
@@ -838,8 +796,6 @@ impl FileScreen {
     /// # Example
     ///
     /// ```no_run
-    /// extern crate charlcd;
-    ///
     /// use std::io::Write;
     /// use charlcd::Screen;
     ///
@@ -874,8 +830,6 @@ impl FileScreen {
     /// # Example
     ///
     /// ```no_run
-    /// extern crate charlcd;
-    ///
     /// use std::io::Write;
     /// use charlcd::Screen;
     ///
