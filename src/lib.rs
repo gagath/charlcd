@@ -334,9 +334,7 @@ where
     }
 }
 
-// Concrete screen based on a File, to write to the real charlcd driver (or to
-// another file).
-pub type FileScreen = Screen<BufWriter<File>>;
+type FileScreen = Screen<BufWriter<File>>;
 
 const DEFAULT_SCREEN_DEV_PATH: &str = "/dev/lcd";
 
@@ -361,10 +359,10 @@ impl FileScreen {
     /// ```no_run
     /// extern crate charlcd;
     ///
-    /// use charlcd::FileScreen;
+    /// use charlcd::Screen;
     ///
     /// fn main() -> std::io::Result<()> {
-    ///     let screen = FileScreen::default()?; // the screen is 20x4 in this test
+    ///     let screen = Screen::default()?; // the screen is 20x4 in this test
     ///
     ///     let width = screen.width()?;
     ///     assert_eq!(width, 20);
@@ -396,10 +394,10 @@ impl FileScreen {
     /// ```no_run
     /// extern crate charlcd;
     ///
-    /// use charlcd::FileScreen;
+    /// use charlcd::Screen;
     ///
     /// fn main() -> std::io::Result<()> {
-    ///     let screen = FileScreen::default()?; // the screen is 20x4 in this test
+    ///     let screen = Screen::default()?; // the screen is 20x4 in this test
     ///
     ///     let height = screen.height()?;
     ///     assert_eq!(height, 4);
