@@ -22,16 +22,21 @@ use codes::WriteInto;
 ///
 /// # Simple example
 ///
-/// ```rust
+/// ```no_run
+/// extern crate charlcd;
+///
 /// use charlcd::Screen;
+/// use std::io::Write;
 ///
 /// fn main() -> std::io::Result<()> {
-///     let mut screen = Screen::default(); // will use "/dev/lcd" charlcd driver
+///     let mut screen = Screen::default()?; // will use "/dev/lcd" charlcd driver
 ///
 ///     screen.clear()?;
 ///     screen.write(b"hello, world!")?;
 ///     screen.flash_backlight()?;
 ///     screen.flush()?; // send all the previous commands to the driver at once
+///
+///     Ok(())
 /// }
 /// ```
 pub struct Screen<T> {
@@ -330,7 +335,7 @@ where
 
 // Concrete screen based on a File, to write to the real charlcd driver (or to
 // another file).
-type FileScreen = Screen<BufWriter<File>>;
+pub type FileScreen = Screen<BufWriter<File>>;
 
 const DEFAULT_SCREEN_DEV_PATH: &str = "/dev/lcd";
 
@@ -352,10 +357,19 @@ impl FileScreen {
     ///
     /// # Example
     ///
-    /// ```rust
-    /// let screen = Screen::default()?; // the screen is 20x4 in this test
-    /// let width = screen.width()?;
-    /// assert_eq!(width, 20);
+    /// ```no_run
+    /// extern crate charlcd;
+    ///
+    /// use charlcd::FileScreen;
+    ///
+    /// fn main() -> std::io::Result<()> {
+    ///     let screen = FileScreen::default()?; // the screen is 20x4 in this test
+    ///
+    ///     let width = screen.width()?;
+    ///     assert_eq!(width, 20);
+    ///
+    ///     Ok(())
+    /// }
     /// ```
     ///
     /// # Important note
@@ -378,10 +392,19 @@ impl FileScreen {
     ///
     /// # Example
     ///
-    /// ```rust
-    /// let screen = Screen::default()?; // the screen is 20x4 in this test
-    /// let width = screen.height()?;
-    /// assert_eq!(width, 4);
+    /// ```no_run
+    /// extern crate charlcd;
+    ///
+    /// use charlcd::FileScreen;
+    ///
+    /// fn main() -> std::io::Result<()> {
+    ///     let screen = FileScreen::default()?; // the screen is 20x4 in this test
+    ///
+    ///     let height = screen.height()?;
+    ///     assert_eq!(height, 4);
+    ///
+    ///     Ok(())
+    /// }
     /// ```
     ///
     /// # Important note
