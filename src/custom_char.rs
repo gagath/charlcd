@@ -16,7 +16,7 @@
 //! ```
 //! /// ▸
 //! #[cfg_attr(rustfmt, rustfmt_skip)]
-//! pub const RIGHT_ARROW: [u8; 8] = [
+//! pub const RIGHT_TRIANGLE: [u8; 8] = [
 //!     0b00000,
 //!     0b01000,
 //!     0b01100,
@@ -60,7 +60,7 @@ pub const fn mirror_y(src: [u8; 8]) -> [u8; 8] {
 
 /// ▸
 #[cfg_attr(rustfmt, rustfmt_skip)]
-pub const RIGHT_ARROW: [u8; 8] = [
+pub const RIGHT_TRIANGLE: [u8; 8] = [
     0b00000,
     0b01000,
     0b01100,
@@ -72,11 +72,11 @@ pub const RIGHT_ARROW: [u8; 8] = [
 ];
 
 /// ◂
-pub const LEFT_ARROW: [u8; 8] = mirror_x(RIGHT_ARROW);
+pub const LEFT_TRIANGLE: [u8; 8] = mirror_x(RIGHT_TRIANGLE);
 
 /// ▴
 #[cfg_attr(rustfmt, rustfmt_skip)]
-pub const UP_ARROW: [u8; 8] = [
+pub const UP_TRIANGLE: [u8; 8] = [
     0b00000,
     0b00000,
     0b00100,
@@ -88,4 +88,4 @@ pub const UP_ARROW: [u8; 8] = [
 ];
 
 /// ▾
-pub const DOWN_ARROW: [u8; 8] = mirror_y(UP_ARROW);
+pub const DOWN_TRIANGLE: [u8; 8] = mirror_y(UP_TRIANGLE);

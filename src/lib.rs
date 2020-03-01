@@ -740,7 +740,7 @@ where
     ///     screen.reinit()?;
     ///
     ///     // Store the custom ▸ character in the screen memory, code 0
-    ///     screen.custom_char(0, custom_char::RIGHT_ARROW)?;
+    ///     screen.custom_char(0, custom_char::RIGHT_TRIANGLE)?;
     ///
     ///     // Print custom character from screen memory, code 0
     ///     screen.write(b"\x00")?;

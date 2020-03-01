@@ -8,10 +8,10 @@ fn main() -> std::io::Result<()> {
     // Alarm symbol
     screen.custom_char(0, [0x04, 0x0E, 0x0E, 0x0E, 0x0E, 0x1F, 0x04, 0x00])?;
 
-    screen.custom_char(1, custom_char::RIGHT_ARROW)?;
-    screen.custom_char(2, custom_char::LEFT_ARROW)?;
-    screen.custom_char(3, custom_char::UP_ARROW)?;
-    screen.custom_char(4, custom_char::DOWN_ARROW)?;
+    screen.custom_char(1, custom_char::RIGHT_TRIANGLE)?;
+    screen.custom_char(2, custom_char::LEFT_TRIANGLE)?;
+    screen.custom_char(3, custom_char::UP_TRIANGLE)?;
+    screen.custom_char(4, custom_char::DOWN_TRIANGLE)?;
 
     screen.clear()?;
     screen.write(b"\x00 Alarm 10:00\n")?;
