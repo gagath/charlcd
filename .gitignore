@@ -1,5 +1,4 @@
 /target
 **/*.rs.bk
 Cargo.lock
-publish_doc.sh
-run.sh
+*.sh
