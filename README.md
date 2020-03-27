@@ -1,5 +1,8 @@
 A rust crate to interact with the mainline Linux charlcd.c driver.
 
+[![crates.io](https://img.shields.io/crates/v/charlcd.svg)](https://crates.io/crates/charlcd)
+[![crates.io](https://img.shields.io/crates/l/charlcd.svg)](https://crates.io/crates/charlcd)
+
 Or, said boldly: _a crate to **correctly** interact with HD44780 LCD
 screens on embedded Linux devices_.
 
