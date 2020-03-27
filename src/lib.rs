@@ -1,5 +1,4 @@
-#![feature(external_doc)]
-#![doc(include = "../README.md")]
+//! A rust crate to interact with the mainline Linux charlcd.c driver.
 
 mod codes;
 pub mod custom_char;

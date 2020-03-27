@@ -1,14 +1,24 @@
-A rust crate to interact with the mainline Linux charlcd.c driver.
+# charlcd
 
 [![Latest version](https://img.shields.io/crates/v/charlcd.svg)](https://crates.io/crates/charlcd)
 [![Documentation](https://docs.rs/charlcd/badge.svg)](https://docs.rs/charlcd)
 [![License](https://img.shields.io/crates/l/charlcd.svg)](https://crates.io/crates/charlcd)
 
+A rust crate to interact with the mainline Linux charlcd.c driver.
+
 Or, said boldly: _a crate to **correctly** interact with HD44780 LCD
 screens on embedded Linux devices_.
 
+# Demo
+
 ![Photo of a test on HD44780 20x4
 screen](https://crates.microjoe.org/charlcd/media/docs/test.jpg)
+
+The use of these kinds of photographies is used all over the
+[documentation](https://crates.io/crates/charlcd) to explain the before and
+after of every available function. Be sure to check them all!
+
+# Rationale
 
 A lot of developers are relying on userspace libraries to interact with the
 very popular HD44780 LCD screens, but these implementations are lacking
@@ -61,5 +71,17 @@ device entry, while letting the kernel driver implement the communication
 with the screen — instead of going from scratch and using ioctl over
 `/dev/i2c-*` like many other libraries do.
 
+# Known bugs
+
+The charlcd driver is currently not able to report screen size to userspace.
+This is mitigated in the library by having a look at the device-tree entries
+directly.
+
+# Going further
+
 For more information about this and a demo on *real hardware*, see [this blog
 article](https://blog.microjoe.org/2019/hd44780-lcd-i2c-screen-using-linux-mainline-charlcd-driver.html).
+
+# License
+
+Apache v2.
