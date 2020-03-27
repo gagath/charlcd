@@ -1,3 +1,6 @@
+#![feature(external_doc)]
+#![doc(include = "../README.md")]
+
 mod codes;
 pub mod custom_char;
 mod of_node;
