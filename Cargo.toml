@@ -7,7 +7,7 @@ license = "Apache-2.0"
 description = "Rust library for charlcd.c Linux driver"
 readme = "README.md"
 keywords = ["linux", "hd44780", "charlcd", "driver", "lcd"]
-categories = ["embedded", "hardware-support", "os::unix-apis"]
+categories = ["embedded"]
 repository = "https://github.com/MicroJoe/charlcd"
 
 [badges]
