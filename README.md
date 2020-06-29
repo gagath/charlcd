@@ -27,8 +27,8 @@ protocol to interact with the screen over and over.
 
 This approach seems just wrong if you consider what the Linux kernel can
 provide in comparison. Indeed, it is the role of device drivers to properly
-abstract the access to the hardware from userspace perspective.  For this,
-the Linux kernel uses an absraction mechanism to declare the hardware:
+abstract the access to the hardware from userspace perspective. For this,
+the Linux kernel uses an abstraction mechanism to declare the hardware:
 the *device-tree*.
 
 The *device-tree* nodes for a screen behind an I2C GPIO expander would look
@@ -63,7 +63,7 @@ auxdisplay: auxdisplay {
 };
 ```
 
-Once the device-tree is correctly configured, the `charlcd` driver will
+Once the *device-tree* is correctly configured, the `charlcd` driver will
 create a `/dev/lcd` character device.
 
 The role of this library is to provide an astraction over this character
@@ -74,7 +74,7 @@ with the screen — instead of going from scratch and using ioctl over
 # Known bugs
 
 The charlcd driver is currently not able to report screen size to userspace.
-This is mitigated in the library by having a look at the device-tree entries
+This is mitigated in the library by having a look at the *device-tree* entries
 directly.
 
 # Going further
