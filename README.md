@@ -15,7 +15,7 @@ screens on embedded Linux devices_.
 screen](https://crates.microjoe.org/charlcd/media/docs/test.jpg)
 
 The use of these kinds of photographies is used all over the
-[documentation](https://crates.io/crates/charlcd) to explain the before and
+[documentation](https://docs.rs/charlcd) to explain the before and
 after of every available function. Be sure to check them all!
 
 # Rationale
