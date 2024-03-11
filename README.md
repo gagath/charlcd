@@ -66,7 +66,7 @@ auxdisplay: auxdisplay {
 Once the *device-tree* is correctly configured, the `charlcd` driver will
 create a `/dev/lcd` character device.
 
-The role of this library is to provide an astraction over this character
+The role of this library is to provide an abstraction over this character
 device entry, while letting the kernel driver implement the communication
 with the screen — instead of going from scratch and using ioctl over
 `/dev/i2c-*` like many other libraries do.
